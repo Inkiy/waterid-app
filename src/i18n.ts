@@ -69,6 +69,8 @@ export interface T {
   roleHostDesc: string;
   roleTenantTitle: string;
   roleTenantDesc: string;
+  faqLandingTitle: string;
+  faqLanding: { q: string; a: string }[];
   // Tenant self-service
   tenantSelfTitle: string;
   tenantSelfBody: string;
@@ -148,6 +150,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: "e.g. John's Airbnb, Maria's Guesthouse",
     fieldRequired: 'Please fill in all required fields',
     shareMsg: (purpose) => `Hi! I need to verify your ID for "${purpose}". Please use the link below to add a watermark before sending it to me — it only takes a few seconds and your document is processed entirely in your browser, never stored anywhere.\n\n`,
+    faqLandingTitle: 'Common questions',
+    faqLanding: [
+      { q: 'Does WaterID store my ID?', a: 'No. Watermarking runs entirely in your browser using the Canvas API. Your image is never sent to any server.' },
+      { q: "What's the difference between Host and Tenant?", a: 'Hosts generate a secure link and send it to guests. Guests open the link, upload their ID, and the watermark is added locally in their browser.' },
+      { q: 'Can the watermark be removed?', a: 'The watermark tiles diagonally across the entire image at high opacity, including over the photo and document number. AI tools cannot remove it without visibly destroying the document.' },
+      { q: 'Is there an app to install?', a: 'No. WaterID works in any browser on any device — no installation needed.' },
+    ],
   },
   zh: {
     dateLocale: 'zh-CN',
@@ -218,6 +227,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: '例：张三民宿、李四 Airbnb',
     fieldRequired: '请填写所有必填项',
     shareMsg: (purpose) => `您好！我需要您提供证件用于「${purpose}」。请点击下方链接为证件添加水印后发给我，只需几秒钟，证件仅在您的设备上处理，我们不存储任何内容。\n\n`,
+    faqLandingTitle: '常见问题',
+    faqLanding: [
+      { q: '印证会存储我的证件吗？', a: '不会。水印处理完全在你的浏览器里通过 Canvas API 完成，图片从不发送到任何服务器。' },
+      { q: '房东和租客的区别是什么？', a: '房东生成授权链接发给租客。租客打开链接，上传证件，水印在他们自己的浏览器里本地添加。' },
+      { q: '水印可以被 PS 掉吗？', a: '水印以高不透明度斜向铺满整张图，包括人脸和证件号码。AI 工具若要清除，必须重建人脸和所有证件信息，结果必然是一张明显伪造的图片。' },
+      { q: '需要安装 App 吗？', a: '不需要。印证是纯网页工具，任何设备的浏览器都能用，无需安装。' },
+    ],
   },
   es: {
     dateLocale: 'es-ES',
@@ -288,6 +304,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: 'ej. Airbnb de Juan, Casa Rural María',
     fieldRequired: 'Por favor, rellena todos los campos requeridos',
     shareMsg: (purpose) => `¡Hola! Necesito verificar tu documento de identidad para "${purpose}". Por favor, usa el enlace a continuación para añadir una marca de agua antes de enviármelo. Solo tarda unos segundos y tu documento se procesa en tu navegador, nunca se almacena.\n\n`,
+    faqLandingTitle: 'Preguntas frecuentes',
+    faqLanding: [
+      { q: '¿WaterID almacena mi ID?', a: 'No. El proceso ocurre completamente en tu navegador usando Canvas API. Tu imagen nunca se envía a ningún servidor.' },
+      { q: '¿Cuál es la diferencia entre Anfitrión e Inquilino?', a: 'Los anfitriones generan un enlace seguro y lo envían a los huéspedes. Los huéspedes abren el enlace, suben su ID y la marca de agua se añade localmente en su navegador.' },
+      { q: '¿Se puede quitar la marca de agua?', a: 'La marca se renderiza diagonalmente en toda la imagen con alta opacidad. Las herramientas de IA no pueden eliminarla sin destruir visiblemente el documento.' },
+      { q: '¿Hay una app que instalar?', a: 'No. WaterID funciona en cualquier navegador en cualquier dispositivo — sin instalación.' },
+    ],
   },
   fr: {
     dateLocale: 'fr-FR',
@@ -358,6 +381,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: 'ex. Airbnb de Jean, Gîte Marie',
     fieldRequired: 'Veuillez remplir tous les champs requis',
     shareMsg: (purpose) => `Bonjour ! J'ai besoin de vérifier votre pièce d'identité pour « ${purpose} ». Veuillez utiliser le lien ci-dessous pour ajouter un filigrane avant de me l'envoyer. Cela prend quelques secondes et votre document est traité dans votre navigateur, jamais stocké.\n\n`,
+    faqLandingTitle: 'Questions fréquentes',
+    faqLanding: [
+      { q: "WaterID stocke-t-il ma pièce d'identité ?", a: "Non. Le traitement s'effectue entièrement dans votre navigateur via l'API Canvas. Votre image n'est jamais envoyée à un serveur." },
+      { q: "Quelle est la différence entre Hôte et Locataire ?", a: "Les hôtes génèrent un lien sécurisé et l'envoient aux locataires. Les locataires ouvrent le lien, téléchargent leur pièce d'identité et le filigrane est ajouté localement dans leur navigateur." },
+      { q: "Le filigrane peut-il être supprimé ?", a: "Le filigrane est rendu en diagonale sur toute l'image avec une opacité élevée. Les outils d'IA ne peuvent pas l'effacer sans détruire visiblement le document." },
+      { q: "Y a-t-il une application à installer ?", a: "Non. WaterID fonctionne dans n'importe quel navigateur sur n'importe quel appareil — sans installation." },
+    ],
   },
   de: {
     dateLocale: 'de-DE',
@@ -428,6 +458,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: "z.B. Hans' Airbnb, Maria's Ferienhaus",
     fieldRequired: 'Bitte füllen Sie alle Pflichtfelder aus',
     shareMsg: (purpose) => `Hallo! Ich benötige Ihren Ausweis für „${purpose}". Bitte verwenden Sie den untenstehenden Link, um ein Wasserzeichen hinzuzufügen, bevor Sie ihn mir senden. Das dauert nur Sekunden und Ihr Dokument wird in Ihrem Browser verarbeitet, nie gespeichert.\n\n`,
+    faqLandingTitle: 'Häufige Fragen',
+    faqLanding: [
+      { q: 'Speichert WaterID meinen Ausweis?', a: 'Nein. Die Wasserzeichenerstellung läuft vollständig in Ihrem Browser über die Canvas API. Ihr Bild wird nie an einen Server gesendet.' },
+      { q: 'Was ist der Unterschied zwischen Gastgeber und Mieter?', a: 'Gastgeber erstellen einen sicheren Link und senden ihn an Gäste. Gäste öffnen den Link, laden ihren Ausweis hoch und das Wasserzeichen wird lokal in ihrem Browser hinzugefügt.' },
+      { q: 'Kann das Wasserzeichen entfernt werden?', a: 'Das Wasserzeichen kachelt diagonal über das gesamte Bild mit hoher Deckkraft. KI-Tools können es nicht entfernen, ohne das Dokument sichtbar zu zerstören.' },
+      { q: 'Gibt es eine App zum Installieren?', a: 'Nein. WaterID funktioniert in jedem Browser auf jedem Gerät — keine Installation erforderlich.' },
+    ],
   },
   ja: {
     dateLocale: 'ja-JP',
@@ -498,6 +535,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: '例: 田中のAirbnb、山田荘',
     fieldRequired: 'すべての必須項目を入力してください',
     shareMsg: (purpose) => `こんにちは！「${purpose}」のため、身分証明書のご提出をお願いしております。下記リンクから透かしを追加してからお送りください。数秒で完了し、書類はお使いのブラウザで処理されます。保存は一切されません。\n\n`,
+    faqLandingTitle: 'よくある質問',
+    faqLanding: [
+      { q: 'WaterIDは身分証を保存しますか？', a: 'いいえ。透かし処理はCanvas APIを使ってブラウザ内で完全に行われます。画像がサーバーに送信されることはありません。' },
+      { q: 'ホストとゲストの違いは何ですか？', a: 'ホストはセキュアリンクを生成してゲストに送ります。ゲストはリンクを開いて身分証をアップロードし、透かしが自分のブラウザでローカルに追加されます。' },
+      { q: '透かしは除去できますか？', a: '透かしは高い不透明度で画像全体に斜めに配置されます。AIツールでは文書を目に見えて破壊せずに除去することはできません。' },
+      { q: 'インストールするアプリはありますか？', a: 'いいえ。WaterIDはどのデバイスのどのブラウザでも動作します — インストール不要。' },
+    ],
   },
   ko: {
     dateLocale: 'ko-KR',
@@ -568,6 +612,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: '예: 김철수 에어비앤비, 박민준 게스트하우스',
     fieldRequired: '모든 필수 항목을 입력해 주세요',
     shareMsg: (purpose) => `안녕하세요! "${purpose}"을 위해 신분증 확인이 필요합니다. 아래 링크를 통해 워터마크를 추가한 후 보내주세요. 몇 초면 완료되며, 서류는 브라우저에서 처리되고 저장되지 않습니다.\n\n`,
+    faqLandingTitle: '자주 묻는 질문',
+    faqLanding: [
+      { q: 'WaterID가 제 신분증을 저장하나요?', a: '아니요. 워터마크 처리는 Canvas API를 사용하여 브라우저에서 완전히 실행됩니다. 이미지는 서버로 전송되지 않습니다.' },
+      { q: '호스트와 게스트의 차이점은 무엇인가요?', a: '호스트는 안전한 링크를 생성해 게스트에게 보냅니다. 게스트는 링크를 열고 신분증을 업로드하면 워터마크가 브라우저에서 로컬로 추가됩니다.' },
+      { q: '워터마크를 제거할 수 있나요?', a: '워터마크는 높은 불투명도로 전체 이미지에 대각선으로 배치됩니다. AI 도구로는 문서를 눈에 띄게 파괴하지 않고는 제거할 수 없습니다.' },
+      { q: '설치할 앱이 있나요?', a: '없습니다. WaterID는 모든 기기의 모든 브라우저에서 작동합니다 — 설치 불필요.' },
+    ],
   },
   pt: {
     dateLocale: 'pt-BR',
@@ -638,6 +689,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: 'ex. Airbnb do João, Casa da Maria',
     fieldRequired: 'Por favor, preencha todos os campos obrigatórios',
     shareMsg: (purpose) => `Olá! Preciso verificar seu documento de identidade para "${purpose}". Por favor, use o link abaixo para adicionar uma marca d'água antes de me enviar. Leva apenas alguns segundos e seu documento é processado no seu navegador, nunca armazenado.\n\n`,
+    faqLandingTitle: 'Perguntas frequentes',
+    faqLanding: [
+      { q: 'WaterID armazena meu documento?', a: 'Não. O processo ocorre completamente no seu navegador usando Canvas API. Sua imagem nunca é enviada a nenhum servidor.' },
+      { q: 'Qual é a diferença entre Anfitrião e Inquilino?', a: 'Os anfitriões geram um link seguro e enviam para os hóspedes. Os hóspedes abrem o link, fazem upload do documento e a marca é adicionada localmente no navegador.' },
+      { q: "A marca d'água pode ser removida?", a: "A marca é renderizada diagonalmente em toda a imagem com alta opacidade. Ferramentas de IA não conseguem removê-la sem destruir o documento visivelmente." },
+      { q: 'Há um aplicativo para instalar?', a: 'Não. WaterID funciona em qualquer navegador em qualquer dispositivo — sem instalação.' },
+    ],
   },
   it: {
     dateLocale: 'it-IT',
@@ -708,6 +766,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: 'es. Airbnb di Marco, Casa Vacanze Maria',
     fieldRequired: 'Si prega di compilare tutti i campi obbligatori',
     shareMsg: (purpose) => `Ciao! Ho bisogno di verificare il tuo documento d'identità per "${purpose}". Usa il link qui sotto per aggiungere una filigrana prima di inviarmelo. Richiede pochi secondi e il documento viene elaborato nel tuo browser, mai salvato.\n\n`,
+    faqLandingTitle: 'Domande frequenti',
+    faqLanding: [
+      { q: 'WaterID salva il mio documento?', a: "No. L'elaborazione avviene completamente nel tuo browser tramite Canvas API. La tua immagine non viene mai inviata a nessun server." },
+      { q: "Qual è la differenza tra Host e Inquilino?", a: "Gli host generano un link sicuro e lo inviano agli ospiti. Gli ospiti aprono il link, caricano il documento e la filigrana viene aggiunta localmente nel loro browser." },
+      { q: 'La filigrana può essere rimossa?', a: "La filigrana viene renderizzata in diagonale su tutta l'immagine ad alta opacità. Gli strumenti AI non possono rimuoverla senza distruggere visibilmente il documento." },
+      { q: "C'è un'app da installare?", a: "No. WaterID funziona in qualsiasi browser su qualsiasi dispositivo — senza installazione." },
+    ],
   },
   ru: {
     dateLocale: 'ru-RU',
@@ -778,6 +843,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: 'напр. Airbnb Ивана, Апартаменты Марии',
     fieldRequired: 'Пожалуйста, заполните все обязательные поля',
     shareMsg: (purpose) => `Здравствуйте! Мне нужно проверить ваш документ для «${purpose}». Пожалуйста, используйте ссылку ниже, чтобы добавить водяной знак перед отправкой. Это займёт несколько секунд — документ обрабатывается в вашем браузере и нигде не сохраняется.\n\n`,
+    faqLandingTitle: 'Частые вопросы',
+    faqLanding: [
+      { q: 'WaterID хранит мой документ?', a: 'Нет. Обработка выполняется полностью в вашем браузере через Canvas API. Изображение никогда не отправляется на сервер.' },
+      { q: 'В чём разница между хозяином и гостем?', a: 'Хозяева создают безопасную ссылку и отправляют её гостям. Гости открывают ссылку, загружают документ и водяной знак добавляется локально в их браузере.' },
+      { q: 'Можно ли удалить водяной знак?', a: 'Водяной знак рендерится по диагонали по всему изображению с высокой непрозрачностью. Инструменты ИИ не могут его удалить, не разрушив документ видимым образом.' },
+      { q: 'Есть ли приложение для установки?', a: 'Нет. WaterID работает в любом браузере на любом устройстве — без установки.' },
+    ],
   },
   tr: {
     dateLocale: 'tr-TR',
@@ -848,6 +920,13 @@ const TRANSLATIONS: Record<LangCode, T> = {
     placeholderRecipient: "örn. Ahmet'in Airbnb'si, Maria'nın Pansiyonu",
     fieldRequired: 'Lütfen tüm zorunlu alanları doldurun',
     shareMsg: (purpose) => `Merhaba! "${purpose}" için kimlik doğrulaması yapılması gerekiyor. Lütfen aşağıdaki bağlantıyı kullanarak kimliğinize filigran ekleyip gönderin. Sadece birkaç saniye sürer ve belgeniz tarayıcınızda işlenir, hiçbir yerde saklanmaz.\n\n`,
+    faqLandingTitle: 'Sık sorulan sorular',
+    faqLanding: [
+      { q: 'WaterID kimliğimi depoluyor mu?', a: 'Hayır. İşlem Canvas API kullanılarak tamamen tarayıcınızda gerçekleşir. Görüntünüz hiçbir sunucuya gönderilmez.' },
+      { q: 'Ev sahibi ve Kiracı arasındaki fark nedir?', a: 'Ev sahipleri güvenli bir bağlantı oluşturur ve misafirlere gönderir. Misafirler bağlantıyı açar, kimliği yükler ve filigran tarayıcılarında yerel olarak eklenir.' },
+      { q: 'Filigran kaldırılabilir mi?', a: 'Filigran yüksek opaklıkla tüm görüntüye çapraz olarak işlenir. Yapay zeka araçları belgeyi görünür şekilde tahrip etmeden onu kaldıramaz.' },
+      { q: 'Yüklenecek bir uygulama var mı?', a: 'Hayır. WaterID herhangi bir cihazda herhangi bir tarayıcıda çalışır — kurulum gerektirmez.' },
+    ],
   },
 };
 
