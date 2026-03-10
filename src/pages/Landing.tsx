@@ -1,6 +1,77 @@
 import { useState } from 'react';
-import { Shield, Home, User } from 'lucide-react';
+import { Shield, Home, User, MessageSquare } from 'lucide-react';
 import { t, LANGUAGES, type LangCode } from '../i18n';
+
+const CONTACT_EMAIL = 'itsbonnibear@gmail.com';
+
+function ContactForm({ lang }: { lang: LangCode }) {
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [type, setType] = useState('');
+
+  const isZh = lang === 'zh';
+
+  const typeOptions = isZh
+    ? ['功能建议', '问题反馈', '合作咨询', '其他']
+    : ['Feature request', 'Bug report', 'Partnership', 'Other'];
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = isZh
+      ? `[印证反馈] ${type || '其他'} - ${name}`
+      : `[WaterID Feedback] ${type || 'Other'} - ${name}`;
+    const body = isZh
+      ? `姓名: ${name}\n类型: ${type}\n\n内容:\n${message}`
+      : `Name: ${name}\nType: ${type}\n\nMessage:\n${message}`;
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mt-8">
+      <div className="flex items-center gap-2 mb-4">
+        <MessageSquare size={18} className="text-blue-500" />
+        <h3 className="text-sm font-bold text-slate-800">
+          {isZh ? '联系我们 / 意见反馈' : 'Contact & Feedback'}
+        </h3>
+      </div>
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="grid grid-cols-2 gap-3">
+          <input
+            type="text"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            placeholder={isZh ? '你的名字' : 'Your name'}
+            required
+            className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <select
+            value={type}
+            onChange={e => setType(e.target.value)}
+            required
+            className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-700"
+          >
+            <option value="">{isZh ? '类型' : 'Type'}</option>
+            {typeOptions.map(o => <option key={o} value={o}>{o}</option>)}
+          </select>
+        </div>
+        <textarea
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+          placeholder={isZh ? '请描述你的问题或建议…' : 'Describe your issue or suggestion…'}
+          required
+          rows={4}
+          className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+        />
+        <button
+          type="submit"
+          className="w-full py-3 rounded-xl bg-blue-600 text-white font-semibold text-sm hover:bg-blue-700 active:scale-[0.98] transition"
+        >
+          {isZh ? '发送（会打开你的邮件应用）' : 'Send (opens your mail app)'}
+        </button>
+      </form>
+    </div>
+  );
+}
 
 export default function Landing({ initialLang = 'en' }: { initialLang?: LangCode }) {
   const [lang, setLang] = useState<LangCode>(initialLang);
@@ -85,6 +156,8 @@ export default function Landing({ initialLang = 'en' }: { initialLang?: LangCode
         >
           {lang === 'zh' ? '了解租客如何使用 →' : 'How does it work for tenants? →'}
         </button>
+
+        <ContactForm lang={lang} />
       </main>
     </div>
   );
