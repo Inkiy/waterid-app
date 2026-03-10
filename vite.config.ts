@@ -4,9 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: '/waterid-app/',
   server: {
     host: '0.0.0.0',
     port: 8080,
-    allowedHosts: 'all',
+    allowedHosts: true,
   },
 })
