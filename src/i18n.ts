@@ -1,16 +1,18 @@
-export type LangCode = 'en' | 'zh' | 'es' | 'fr' | 'de' | 'ja' | 'ko' | 'pt' | 'it' | 'ru';
+export type LangCode = 'en' | 'zh' | 'es' | 'fr' | 'de' | 'ja' | 'ko' | 'pt' | 'it' | 'ru' | 'tr';
 
+// Ordered by Airbnb global market size
 export const LANGUAGES: { code: LangCode; label: string }[] = [
-  { code: 'en', label: 'English' },
-  { code: 'zh', label: '中文' },
-  { code: 'es', label: 'Español' },
-  { code: 'fr', label: 'Français' },
-  { code: 'de', label: 'Deutsch' },
-  { code: 'ja', label: '日本語' },
-  { code: 'ko', label: '한국어' },
-  { code: 'pt', label: 'Português' },
-  { code: 'it', label: 'Italiano' },
-  { code: 'ru', label: 'Русский' },
+  { code: 'en', label: 'English' },    // #1 US/UK/AU
+  { code: 'fr', label: 'Français' },   // #2 France top Airbnb market
+  { code: 'de', label: 'Deutsch' },    // #3 Germany
+  { code: 'es', label: 'Español' },    // #4 Spain + Latin America
+  { code: 'pt', label: 'Português' },  // #5 Brazil
+  { code: 'it', label: 'Italiano' },   // #6 Italy (major tourism)
+  { code: 'zh', label: '中文' },        // #7 China
+  { code: 'ja', label: '日本語' },      // #8 Japan
+  { code: 'ko', label: '한국어' },      // #9 Korea
+  { code: 'tr', label: 'Türkçe' },     // #10 Turkey (fast growing)
+  { code: 'ru', label: 'Русский' },    // #11 Russia
 ];
 
 export interface T {
@@ -62,6 +64,17 @@ export interface T {
   invalidBody: string;
   expiredTitle: string;
   expiredBody: (host: string, expiry: string) => string;
+  // Landing page
+  roleHostTitle: string;
+  roleHostDesc: string;
+  roleTenantTitle: string;
+  roleTenantDesc: string;
+  // Tenant self-service
+  tenantSelfTitle: string;
+  tenantSelfBody: string;
+  labelRecipient: string;
+  placeholderRecipient: string;
+  fieldRequired: string;
 }
 
 const TRANSLATIONS: Record<LangCode, T> = {
@@ -124,6 +137,15 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: 'This link is broken or malformed. Please ask the sender to generate a new one.',
     expiredTitle: 'This link has expired',
     expiredBody: (host, expiry) => `This authorization expired on ${expiry}. Please ask ${host} to send you a new link.`,
+    roleHostTitle: "I'm a Host / Landlord",
+    roleHostDesc: 'Generate a secure link to send to your tenants',
+    roleTenantTitle: "I'm a Tenant / Guest",
+    roleTenantDesc: 'Add a watermark to my ID before sharing',
+    tenantSelfTitle: 'Add Watermark to My ID',
+    tenantSelfBody: 'Fill in who this is for and why, then upload your ID. The watermark is added locally — your image never leaves your device.',
+    labelRecipient: 'Sending to (host/landlord name)',
+    placeholderRecipient: "e.g. John's Airbnb, Maria's Guesthouse",
+    fieldRequired: 'Please fill in all required fields',
   },
   zh: {
     dateLocale: 'zh-CN',
@@ -184,6 +206,15 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: '该链接已损坏或格式不正确，请联系发送方重新生成。',
     expiredTitle: '授权已过期',
     expiredBody: (host, expiry) => `该授权链接于 ${expiry} 到期，请联系 ${host} 重新发送链接。`,
+    roleHostTitle: '我是房东/民宿主',
+    roleHostDesc: '生成授权链接发给房客',
+    roleTenantTitle: '我是租客/住客',
+    roleTenantDesc: '给我的证件添加水印再发送',
+    tenantSelfTitle: '给我的证件添加水印',
+    tenantSelfBody: '填写发送对象和用途，然后上传证件。水印在本地添加——图片不会离开你的设备。',
+    labelRecipient: '发送给（房东/民宿名称）',
+    placeholderRecipient: '例：张三民宿、李四 Airbnb',
+    fieldRequired: '请填写所有必填项',
   },
   es: {
     dateLocale: 'es-ES',
@@ -244,6 +275,15 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: 'Este enlace está roto o mal formado. Pide al remitente que genere uno nuevo.',
     expiredTitle: 'Este enlace ha expirado',
     expiredBody: (host, expiry) => `Esta autorización expiró el ${expiry}. Por favor pide a ${host} que te envíe un nuevo enlace.`,
+    roleHostTitle: 'Soy Anfitrión / Propietario',
+    roleHostDesc: 'Generar un enlace seguro para enviar a los inquilinos',
+    roleTenantTitle: 'Soy Inquilino / Huésped',
+    roleTenantDesc: 'Añadir marca de agua a mi documento antes de enviarlo',
+    tenantSelfTitle: 'Añadir Marca de Agua a Mi Documento',
+    tenantSelfBody: 'Rellena para quién es y por qué, luego sube tu documento. La marca de agua se añade localmente — tu imagen nunca sale de tu dispositivo.',
+    labelRecipient: 'Enviando a (nombre del anfitrión/propietario)',
+    placeholderRecipient: 'ej. Airbnb de Juan, Casa Rural María',
+    fieldRequired: 'Por favor, rellena todos los campos requeridos',
   },
   fr: {
     dateLocale: 'fr-FR',
@@ -304,6 +344,15 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: "Ce lien est endommagé ou mal formé. Demandez à l'expéditeur d'en générer un nouveau.",
     expiredTitle: 'Ce lien a expiré',
     expiredBody: (host, expiry) => `Cette autorisation a expiré le ${expiry}. Veuillez demander à ${host} de vous envoyer un nouveau lien.`,
+    roleHostTitle: 'Je suis Hôte / Propriétaire',
+    roleHostDesc: 'Générer un lien sécurisé à envoyer aux locataires',
+    roleTenantTitle: 'Je suis Locataire / Voyageur',
+    roleTenantDesc: "Ajouter un filigrane à mon document avant de l'envoyer",
+    tenantSelfTitle: 'Ajouter un Filigrane à Mon Document',
+    tenantSelfBody: "Remplissez pour qui c'est et pourquoi, puis téléchargez votre document. Le filigrane est ajouté localement — votre image ne quitte jamais votre appareil.",
+    labelRecipient: "Envoi à (nom de l'hôte/propriétaire)",
+    placeholderRecipient: 'ex. Airbnb de Jean, Gîte Marie',
+    fieldRequired: 'Veuillez remplir tous les champs requis',
   },
   de: {
     dateLocale: 'de-DE',
@@ -364,6 +413,15 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: 'Dieser Link ist beschädigt oder falsch formatiert. Bitten Sie den Absender, einen neuen zu generieren.',
     expiredTitle: 'Dieser Link ist abgelaufen',
     expiredBody: (host, expiry) => `Diese Autorisierung lief am ${expiry} ab. Bitte bitten Sie ${host}, Ihnen einen neuen Link zu senden.`,
+    roleHostTitle: 'Ich bin Gastgeber / Vermieter',
+    roleHostDesc: 'Einen sicheren Link für Mieter erstellen',
+    roleTenantTitle: 'Ich bin Mieter / Gast',
+    roleTenantDesc: 'Mein Dokument vor dem Senden mit Wasserzeichen versehen',
+    tenantSelfTitle: 'Wasserzeichen zu Meinem Dokument Hinzufügen',
+    tenantSelfBody: 'Füllen Sie aus, für wen und warum, und laden Sie dann Ihr Dokument hoch. Das Wasserzeichen wird lokal hinzugefügt — Ihr Bild verlässt nie Ihr Gerät.',
+    labelRecipient: 'Senden an (Name des Gastgebers/Vermieters)',
+    placeholderRecipient: "z.B. Hans' Airbnb, Maria's Ferienhaus",
+    fieldRequired: 'Bitte füllen Sie alle Pflichtfelder aus',
   },
   ja: {
     dateLocale: 'ja-JP',
@@ -424,6 +482,15 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: 'このリンクは破損しているか、形式が正しくありません。送信者に新しいリンクを生成してもらってください。',
     expiredTitle: 'このリンクは有効期限切れです',
     expiredBody: (host, expiry) => `この認証は${expiry}に期限切れになりました。${host}に新しいリンクを送ってもらってください。`,
+    roleHostTitle: 'ホスト / 大家です',
+    roleHostDesc: 'ゲストに送るセキュアリンクを生成',
+    roleTenantTitle: 'ゲスト / 入居者です',
+    roleTenantDesc: '送付前に証明書に透かしを追加',
+    tenantSelfTitle: '証明書に透かしを追加',
+    tenantSelfBody: '誰に送るか・目的を入力し、証明書をアップロードしてください。透かしはローカルで追加されます — 画像はデバイスから出ません。',
+    labelRecipient: '送付先（ホスト/大家の名前）',
+    placeholderRecipient: '例: 田中のAirbnb、山田荘',
+    fieldRequired: 'すべての必須項目を入力してください',
   },
   ko: {
     dateLocale: 'ko-KR',
@@ -484,6 +551,15 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: '이 링크는 손상되었거나 형식이 잘못되었습니다. 발신자에게 새 링크를 생성해달라고 요청하세요.',
     expiredTitle: '이 링크는 만료되었습니다',
     expiredBody: (host, expiry) => `이 인증은 ${expiry}에 만료되었습니다. ${host}에게 새 링크를 보내달라고 요청하세요.`,
+    roleHostTitle: '호스트 / 집주인입니다',
+    roleHostDesc: '세입자에게 보낼 보안 링크 생성',
+    roleTenantTitle: '세입자 / 게스트입니다',
+    roleTenantDesc: '제출 전 신분증에 워터마크 추가',
+    tenantSelfTitle: '내 신분증에 워터마크 추가',
+    tenantSelfBody: '누구에게, 어떤 목적으로 보내는지 입력하고 신분증을 업로드하세요. 워터마크는 기기에서 로컬로 추가됩니다.',
+    labelRecipient: '받는 사람 (호스트/집주인 이름)',
+    placeholderRecipient: '예: 김철수 에어비앤비, 박민준 게스트하우스',
+    fieldRequired: '모든 필수 항목을 입력해 주세요',
   },
   pt: {
     dateLocale: 'pt-BR',
@@ -544,6 +620,15 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: 'Este link está corrompido ou mal formado. Peça ao remetente que gere um novo.',
     expiredTitle: 'Este link expirou',
     expiredBody: (host, expiry) => `Esta autorização expirou em ${expiry}. Por favor peça a ${host} que te envie um novo link.`,
+    roleHostTitle: 'Sou Anfitrião / Proprietário',
+    roleHostDesc: 'Gerar um link seguro para enviar aos inquilinos',
+    roleTenantTitle: 'Sou Inquilino / Hóspede',
+    roleTenantDesc: "Adicionar marca d'água ao meu documento antes de enviar",
+    tenantSelfTitle: "Adicionar Marca d'Água ao Meu Documento",
+    tenantSelfBody: "Preencha para quem é e por quê, depois faça upload do documento. A marca d'água é adicionada localmente — sua imagem nunca sai do dispositivo.",
+    labelRecipient: 'Enviando para (nome do anfitrião/proprietário)',
+    placeholderRecipient: 'ex. Airbnb do João, Casa da Maria',
+    fieldRequired: 'Por favor, preencha todos os campos obrigatórios',
   },
   it: {
     dateLocale: 'it-IT',
@@ -604,6 +689,15 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: "Questo link è danneggiato o mal formattato. Chiedi al mittente di generarne uno nuovo.",
     expiredTitle: 'Questo link è scaduto',
     expiredBody: (host, expiry) => `Questa autorizzazione è scaduta il ${expiry}. Chiedi a ${host} di inviarti un nuovo link.`,
+    roleHostTitle: 'Sono un Host / Proprietario',
+    roleHostDesc: 'Genera un link sicuro da inviare agli inquilini',
+    roleTenantTitle: 'Sono un Inquilino / Ospite',
+    roleTenantDesc: 'Aggiungere filigrana al mio documento prima di inviarlo',
+    tenantSelfTitle: 'Aggiungi Filigrana al Mio Documento',
+    tenantSelfBody: "Compila per chi è e perché, poi carica il documento. La filigrana viene aggiunta localmente — l'immagine non lascia mai il tuo dispositivo.",
+    labelRecipient: "Invio a (nome dell'host/proprietario)",
+    placeholderRecipient: 'es. Airbnb di Marco, Casa Vacanze Maria',
+    fieldRequired: 'Si prega di compilare tutti i campi obbligatori',
   },
   ru: {
     dateLocale: 'ru-RU',
@@ -664,6 +758,84 @@ const TRANSLATIONS: Record<LangCode, T> = {
     invalidBody: 'Эта ссылка повреждена или неправильно сформирована. Попросите отправителя создать новую.',
     expiredTitle: 'Эта ссылка истекла',
     expiredBody: (host, expiry) => `Срок действия этой авторизации истёк ${expiry}. Пожалуйста, попросите ${host} прислать новую ссылку.`,
+    roleHostTitle: 'Я Хозяин / Арендодатель',
+    roleHostDesc: 'Создать безопасную ссылку для отправки жильцам',
+    roleTenantTitle: 'Я Жилец / Гость',
+    roleTenantDesc: 'Добавить водяной знак на документ перед отправкой',
+    tenantSelfTitle: 'Добавить Водяной Знак на Документ',
+    tenantSelfBody: 'Укажите кому и зачем, затем загрузите документ. Водяной знак добавляется локально — изображение не покидает устройство.',
+    labelRecipient: 'Кому отправляется (имя хозяина/арендодателя)',
+    placeholderRecipient: 'напр. Airbnb Ивана, Апартаменты Марии',
+    fieldRequired: 'Пожалуйста, заполните все обязательные поля',
+  },
+  tr: {
+    dateLocale: 'tr-TR',
+    wmMain: (host, purpose, date) => `Yalnızca ${purpose} için · Yetki: ${host} · Geçerli: ${date}`,
+    wmCornerTitle: 'YALNIZCA YETKİLİ KULLANIM',
+    wmValidUntil: 'Geçerlilik tarihi',
+    appTitle: 'WaterID',
+    appSubtitle: 'Görüntüler cihazınızda yerel olarak işlenir — hiçbir sunucuya gönderilmez',
+    heroTitle: 'Güvenli Bağlantı Oluştur',
+    heroBody: 'Bilgilerinizi girin ve bağlantıyı gönderin. Karşı taraf kimliğini yükler, filigran tarayıcısında eklenir, ardından size indirir — görseller hiçbir sunucuya ulaşmaz.',
+    labelHost: 'Adınız / mülk adı',
+    placeholderHost: "örn. Ahmet'in Airbnb'si, Maria'nın Pansiyonu",
+    labelPurpose: 'Amaç',
+    labelExpiry: 'Geçerlilik süresi',
+    expiryOpts: [
+      { label: '1 hafta', days: 7 },
+      { label: '1 ay', days: 30 },
+      { label: '3 ay', days: 90 },
+      { label: '6 ay', days: 180 },
+    ],
+    purposePresets: [
+      'Airbnb check-in doğrulama',
+      'Tatil kiralama check-in',
+      'Otel rezervasyon doğrulama',
+      'Kiralık depozito güvencesi',
+      'Sözleşme imza doğrulama',
+      'Diğer kimlik doğrulama',
+    ],
+    purposeCustomLabel: 'Diğer kimlik doğrulama',
+    purposeCustomPlaceholder: 'Belirli amacı açıklayın',
+    btnGenerate: 'Güvenli bağlantı oluştur',
+    linkReady: 'Bağlantı hazır',
+    btnCopy: 'Bağlantıyı kopyala ve gönder',
+    btnCopied: 'Kopyalandı!',
+    btnUseSelf: 'Kendim kullan (şimdi kimliğimi yükle)',
+    flowHint: 'Bağlantıyı açar → kimliği yükler → filigran eklenir → indirir',
+    labelLang: 'Dil',
+    uploadClick: 'Kimlik fotoğrafını yüklemek için tıklayın',
+    uploadDrag: 'veya buraya sürükleyip bırakın',
+    uploadFormats: 'JPG, PNG, HEIC ve daha fazlası',
+    processingMsg: 'Filigran ekleniyor…',
+    processingNote: 'İşlem cihazınızda yerel olarak gerçekleşir',
+    doneTitle: 'Filigran başarıyla eklendi',
+    btnDownload: 'Filigranli kimliği indir',
+    btnAnother: 'Başka bir işlem',
+    authDetails: 'Yetkilendirme isteği detayları',
+    authRequester: 'İsteyen',
+    authPurpose: 'Amaç',
+    authValidUntil: 'Geçerlilik tarihi',
+    securityTitle: 'Kimliğiniz %100 güvende',
+    securityBody: 'Filigran işlemi tamamen tarayıcınızda gerçekleşir. Kimliğiniz hiçbir sunucuya gönderilmez — belgelerinizi hiç göremeyiz.',
+    tipText: (host, purpose, expiry) => `Bu dosya yalnızca ${host} için ${purpose} amacıyla yetkilendirilmiştir, ${expiry} tarihine kadar geçerlidir. Paylaşmayın. Yetkisiz kullanım filigranla kanıtlanabilir.`,
+    returnTitle: 'Başka bir ev sahibine kimlik göndermeniz mi gerekiyor?',
+    returnSub: 'Yeni koşullar belirlemek ve taze filigranli kopya oluşturmak için ana sayfaya dönün',
+    returnBtn: 'Ana sayfaya dön →',
+    errorRetry: 'Tekrar dene',
+    invalidTitle: 'Geçersiz bağlantı',
+    invalidBody: 'Bu bağlantı bozuk veya hatalı biçimde. Gönderenin yeni bir tane oluşturmasını isteyin.',
+    expiredTitle: 'Bu bağlantının süresi doldu',
+    expiredBody: (host, expiry) => `Bu yetkilendirme ${expiry} tarihinde sona erdi. Lütfen ${host}'dan yeni bir bağlantı göndermesini isteyin.`,
+    roleHostTitle: 'Ev Sahibi / Mülk Sahibiyim',
+    roleHostDesc: 'Kiracılara göndermek için güvenli bağlantı oluştur',
+    roleTenantTitle: 'Kiracı / Misafirim',
+    roleTenantDesc: 'Göndermeden önce kimliğime filigran ekle',
+    tenantSelfTitle: 'Kimliğime Filigran Ekle',
+    tenantSelfBody: 'Kime ve neden gönderildiğini doldurun, ardından kimliğinizi yükleyin. Filigran yerel olarak eklenir — görüntünüz cihazınızdan çıkmaz.',
+    labelRecipient: 'Kime gönderiliyor (ev sahibi/mülk sahibi adı)',
+    placeholderRecipient: "örn. Ahmet'in Airbnb'si, Maria'nın Pansiyonu",
+    fieldRequired: 'Lütfen tüm zorunlu alanları doldurun',
   },
 };
 
