@@ -2,9 +2,14 @@ import { useState } from 'react';
 import { Shield, Home, User } from 'lucide-react';
 import { t, LANGUAGES, type LangCode } from '../i18n';
 
-export default function Landing() {
-  const [lang, setLang] = useState<LangCode>('en');
+export default function Landing({ initialLang = 'en' }: { initialLang?: LangCode }) {
+  const [lang, setLang] = useState<LangCode>(initialLang);
   const tr = t(lang);
+
+  const handleLangChange = (newLang: LangCode) => {
+    setLang(newLang);
+    window.location.hash = newLang === 'en' ? '#/' : `#/${newLang}`;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -19,8 +24,8 @@ export default function Landing() {
           </div>
           <select
             value={lang}
-            onChange={e => setLang(e.target.value as LangCode)}
-            className="text-xs border border-slate-200 rounded-lg px-2 py-1.5 bg-white text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={e => handleLangChange(e.target.value as LangCode)}
+            className="text-xs border border-slate-200 rounded-lg px-2 py-2 bg-white text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {LANGUAGES.map(l => (
               <option key={l.code} value={l.code}>{l.label}</option>
@@ -37,7 +42,7 @@ export default function Landing() {
 
         {/* Host card */}
         <button
-          onClick={() => { window.location.hash = '#/host'; }}
+          onClick={() => { window.location.hash = lang === 'en' ? '#/host' : `#/host/${lang}`; }}
           className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-6 text-left hover:border-blue-300 hover:shadow-md active:scale-[0.99] transition group"
         >
           <div className="flex items-start gap-4">
@@ -51,10 +56,16 @@ export default function Landing() {
             <span className="ml-auto text-slate-300 text-xl self-center">›</span>
           </div>
         </button>
+        <button
+          onClick={() => { window.location.hash = lang === 'en' ? '#/for-hosts' : `#/for-hosts/${lang}`; }}
+          className="w-full text-xs text-blue-500 hover:text-blue-700 transition text-center -mt-2 pb-1"
+        >
+          {lang === 'zh' ? '了解房东如何使用 →' : 'How does it work for hosts? →'}
+        </button>
 
         {/* Tenant card */}
         <button
-          onClick={() => { window.location.hash = '#/tenant'; }}
+          onClick={() => { window.location.hash = lang === 'en' ? '#/tenant' : `#/tenant/${lang}`; }}
           className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-6 text-left hover:border-green-300 hover:shadow-md active:scale-[0.99] transition group"
         >
           <div className="flex items-start gap-4">
@@ -67,6 +78,12 @@ export default function Landing() {
             </div>
             <span className="ml-auto text-slate-300 text-xl self-center">›</span>
           </div>
+        </button>
+        <button
+          onClick={() => { window.location.hash = lang === 'en' ? '#/for-tenants' : `#/for-tenants/${lang}`; }}
+          className="w-full text-xs text-green-500 hover:text-green-700 transition text-center -mt-2 pb-1"
+        >
+          {lang === 'zh' ? '了解租客如何使用 →' : 'How does it work for tenants? →'}
         </button>
       </main>
     </div>
