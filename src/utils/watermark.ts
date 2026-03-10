@@ -30,7 +30,9 @@ function drawDiagonalGrid(
   ctx.strokeStyle = 'rgba(0, 0, 0, 0.20)';
   ctx.lineWidth = 0.4;
 
-  const stepX = fontSize * 18;
+  // Measure actual text width so rows never overlap
+  const textWidth = ctx.measureText(text).width;
+  const stepX = textWidth + fontSize * 5;
   const stepY = fontSize * 3.5;
 
   ctx.rotate(-Math.PI / 6);  // ~30 degree diagonal

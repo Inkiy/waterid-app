@@ -2,7 +2,8 @@ import { useState, useRef, useCallback } from 'react';
 import { Shield, Upload, Download, AlertTriangle, CheckCircle, Loader } from 'lucide-react';
 import { decodeParams, formatExpiry, isExpired, type WatermarkParams } from '../utils/urlParams';
 import { applyWatermark, type WatermarkResult } from '../utils/watermark';
-import { t } from '../i18n';
+import { t, LANGUAGES } from '../i18n';
+import type { LangCode } from '../i18n';
 
 interface UploadPageProps {
   encoded: string;
@@ -10,9 +11,13 @@ interface UploadPageProps {
 
 type Stage = 'idle' | 'processing' | 'done' | 'error';
 
+const VALID_LANGS = LANGUAGES.map(l => l.code);
+
 export default function UploadPage({ encoded }: UploadPageProps) {
   const params: WatermarkParams | null = decodeParams(encoded);
-  const tr = t(params?.lang);
+  const browserLang = navigator.language.split('-')[0] as LangCode;
+  const uiLang = VALID_LANGS.includes(browserLang) ? browserLang : (params?.lang ?? 'en');
+  const tr = t(uiLang);
 
   const [stage, setStage] = useState<Stage>('idle');
   const [result, setResult] = useState<WatermarkResult | null>(null);
@@ -106,11 +111,11 @@ export default function UploadPage({ encoded }: UploadPageProps) {
           <div className="space-y-2.5">
             <div className="flex items-start justify-between gap-4">
               <span className="text-sm text-slate-500 flex-shrink-0">{tr.authRequester}</span>
-              <span className="text-sm font-semibold text-slate-800 text-right">{params.host}</span>
+              <span className="text-sm font-semibold text-slate-800 text-right break-words min-w-0">{params.host}</span>
             </div>
             <div className="flex items-start justify-between gap-4">
               <span className="text-sm text-slate-500 flex-shrink-0">{tr.authPurpose}</span>
-              <span className="text-sm font-semibold text-slate-800 text-right">{params.purpose}</span>
+              <span className="text-sm font-semibold text-slate-800 text-right break-words min-w-0">{params.purpose}</span>
             </div>
             <div className="flex items-start justify-between gap-4">
               <span className="text-sm text-slate-500 flex-shrink-0">{tr.authValidUntil}</span>
@@ -135,7 +140,7 @@ export default function UploadPage({ encoded }: UploadPageProps) {
             onDrop={handleDrop}
             onDragOver={e => { e.preventDefault(); setDragging(true); }}
             onDragLeave={() => setDragging(false)}
-            className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition ${
+            className={`border-2 border-dashed rounded-2xl p-6 sm:p-10 text-center cursor-pointer transition ${
               dragging
                 ? 'border-blue-400 bg-blue-50'
                 : 'border-slate-200 hover:border-blue-300 hover:bg-blue-50/50'

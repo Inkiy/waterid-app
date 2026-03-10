@@ -9,8 +9,8 @@ function addDays(days: number): string {
   return d.toISOString().split('T')[0];
 }
 
-export default function Generator() {
-  const [lang, setLang] = useState<LangCode>('en');
+export default function Generator({ initialLang = 'en' }: { initialLang?: LangCode }) {
+  const [lang, setLang] = useState<LangCode>(initialLang);
   const tr = t(lang);
 
   const [host, setHost] = useState('');
@@ -43,8 +43,10 @@ export default function Generator() {
     setGeneratedUrl(buildUploadUrl(params));
   };
 
+  const shareText = generatedUrl ? tr.shareMsg(finalPurpose || tr.purposePresets[0]) + generatedUrl : '';
+
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(generatedUrl);
+    await navigator.clipboard.writeText(shareText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -61,15 +63,42 @@ export default function Generator() {
             <h1 className="text-base font-bold text-slate-800">{tr.appTitle}</h1>
             <p className="text-xs text-slate-500">{tr.appSubtitle}</p>
           </div>
+          {/* Mobile: single dropdown */}
           <select
             value={lang}
             onChange={e => handleLangChange(e.target.value as LangCode)}
-            className="ml-auto flex-shrink-0 text-xs border border-slate-200 rounded-lg px-2 py-1.5 bg-white text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="sm:hidden ml-auto text-xs border border-slate-200 rounded-lg px-2 py-2 bg-white text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 flex-shrink-0"
           >
             {LANGUAGES.map(l => (
               <option key={l.code} value={l.code}>{l.label}</option>
             ))}
           </select>
+          {/* Desktop: pills + more dropdown */}
+          <div className="hidden sm:flex ml-auto flex-shrink-0 items-center gap-1">
+            {LANGUAGES.slice(0, 5).map(l => (
+              <button
+                key={l.code}
+                onClick={() => handleLangChange(l.code)}
+                className={`text-xs px-2 py-1 rounded-md font-medium transition ${
+                  lang === l.code
+                    ? 'bg-blue-600 text-white'
+                    : 'text-slate-500 hover:bg-slate-100'
+                }`}
+              >
+                {l.label}
+              </button>
+            ))}
+            <select
+              value={LANGUAGES.slice(0, 5).some(l => l.code === lang) ? '' : lang}
+              onChange={e => e.target.value && handleLangChange(e.target.value as LangCode)}
+              className="text-xs border border-slate-200 rounded-md px-1.5 py-1 bg-white text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">More…</option>
+              {LANGUAGES.slice(5).map(l => (
+                <option key={l.code} value={l.code}>{l.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </header>
 
@@ -139,7 +168,7 @@ export default function Generator() {
             <label className="block text-sm font-medium text-slate-700 mb-2">
               {tr.labelExpiry}
             </label>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {tr.expiryOpts.map(opt => (
                 <button
                   key={opt.days}
@@ -178,8 +207,9 @@ export default function Generator() {
               <span className="text-sm font-semibold text-green-700">{tr.linkReady}</span>
             </div>
 
-            <div className="bg-slate-50 rounded-xl p-3 break-all text-xs text-slate-500 font-mono leading-relaxed">
-              {generatedUrl}
+            {/* Message preview */}
+            <div className="bg-slate-50 rounded-xl p-3 text-xs text-slate-600 leading-relaxed whitespace-pre-wrap select-all">
+              {shareText}
             </div>
 
             <button

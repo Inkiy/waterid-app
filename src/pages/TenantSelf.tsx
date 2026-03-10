@@ -12,8 +12,8 @@ function addDays(days: number): string {
   return d.toISOString().split('T')[0];
 }
 
-export default function TenantSelf() {
-  const [lang, setLang] = useState<LangCode>('en');
+export default function TenantSelf({ initialLang = 'en' }: { initialLang?: LangCode }) {
+  const [lang, setLang] = useState<LangCode>(initialLang);
   const tr = t(lang);
 
   const [recipient, setRecipient] = useState('');
@@ -99,7 +99,7 @@ export default function TenantSelf() {
         <div className="max-w-lg mx-auto px-4 py-4 flex items-center gap-3">
           <button
             onClick={() => { window.location.hash = '#/'; }}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition flex-shrink-0"
+            className="w-10 h-10 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition flex-shrink-0"
           >
             <ArrowLeft size={18} />
           </button>
@@ -199,7 +199,7 @@ export default function TenantSelf() {
             <label className="block text-sm font-medium text-slate-700 mb-2">
               {tr.labelExpiry}
             </label>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {tr.expiryOpts.map(opt => (
                 <button
                   key={opt.days}
@@ -238,7 +238,7 @@ export default function TenantSelf() {
             onDrop={handleDrop}
             onDragOver={e => { e.preventDefault(); setDragging(true); }}
             onDragLeave={() => setDragging(false)}
-            className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition ${
+            className={`border-2 border-dashed rounded-2xl p-6 sm:p-10 text-center cursor-pointer transition ${
               dragging
                 ? 'border-blue-400 bg-blue-50'
                 : 'border-slate-200 hover:border-blue-300 hover:bg-blue-50/50'

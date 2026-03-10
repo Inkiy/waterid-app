@@ -1,18 +1,18 @@
 export type LangCode = 'en' | 'zh' | 'es' | 'fr' | 'de' | 'ja' | 'ko' | 'pt' | 'it' | 'ru' | 'tr';
 
-// Ordered by Airbnb global market size
+// Ordered by outbound tourism volume/spending
 export const LANGUAGES: { code: LangCode; label: string }[] = [
-  { code: 'en', label: 'English' },    // #1 US/UK/AU
-  { code: 'fr', label: 'Français' },   // #2 France top Airbnb market
-  { code: 'de', label: 'Deutsch' },    // #3 Germany
-  { code: 'es', label: 'Español' },    // #4 Spain + Latin America
-  { code: 'pt', label: 'Português' },  // #5 Brazil
-  { code: 'it', label: 'Italiano' },   // #6 Italy (major tourism)
-  { code: 'zh', label: '中文' },        // #7 China
-  { code: 'ja', label: '日本語' },      // #8 Japan
-  { code: 'ko', label: '한국어' },      // #9 Korea
-  { code: 'tr', label: 'Türkçe' },     // #10 Turkey (fast growing)
-  { code: 'ru', label: 'Русский' },    // #11 Russia
+  { code: 'en', label: 'English' },    // #1 US/UK/AU — global lingua franca
+  { code: 'zh', label: '中文' },        // #2 China — #1 outbound spending
+  { code: 'de', label: 'Deutsch' },    // #3 Germany — most frequent EU travelers
+  { code: 'ko', label: '한국어' },      // #4 South Korea — high per-capita travel rate
+  { code: 'fr', label: 'Français' },   // #5 France
+  { code: 'es', label: 'Español' },    // #6 Spain + Latin America
+  { code: 'ja', label: '日本語' },      // #7 Japan
+  { code: 'pt', label: 'Português' },  // #8 Brazil + Portugal
+  { code: 'it', label: 'Italiano' },   // #9 Italy
+  { code: 'ru', label: 'Русский' },    // #10 Russia
+  { code: 'tr', label: 'Türkçe' },     // #11 Turkey
 ];
 
 export interface T {
@@ -75,6 +75,7 @@ export interface T {
   labelRecipient: string;
   placeholderRecipient: string;
   fieldRequired: string;
+  shareMsg: (purpose: string) => string;
 }
 
 const TRANSLATIONS: Record<LangCode, T> = {
@@ -84,9 +85,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: 'AUTHORIZED USE ONLY',
     wmValidUntil: 'Valid until',
     appTitle: 'WaterID',
-    appSubtitle: 'Images processed locally on your device — never sent to any server',
+    appSubtitle: 'Your documents never leave your device. We never store them.',
     heroTitle: 'Generate Your Secure Link',
-    heroBody: 'Set your info and send the link. The other party uploads their ID, the watermark is added in their browser, then they download it for you — images never touch any server.',
+    heroBody: 'Set your info and send the link. The other party uploads their ID, the watermark is added in their browser, and they download it for you. We never store or view your documents.',
     labelHost: 'Your name / property name',
     placeholderHost: "e.g. John's Airbnb, Maria's Guesthouse",
     labelPurpose: 'Purpose',
@@ -146,6 +147,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: 'Sending to (host/landlord name)',
     placeholderRecipient: "e.g. John's Airbnb, Maria's Guesthouse",
     fieldRequired: 'Please fill in all required fields',
+    shareMsg: (purpose) => `Hi! I need to verify your ID for "${purpose}". Please use the link below to add a watermark before sending it to me — it only takes a few seconds and your document is processed entirely in your browser, never stored anywhere.\n\n`,
   },
   zh: {
     dateLocale: 'zh-CN',
@@ -153,9 +155,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: '【证件授权专用】',
     wmValidUntil: '有效期至',
     appTitle: '印证',
-    appSubtitle: '图片仅在用户设备处理，不经过任何服务器',
+    appSubtitle: '证件全程不离开你的设备，我们不存储任何图片。',
     heroTitle: '生成专属授权链接',
-    heroBody: '设置好你的信息后，将链接发给对方。对方上传证件后，水印会在他们的设备上自动添加，然后下载给你——图片全程不经过任何服务器。',
+    heroBody: '设置好你的信息，将链接发给对方。对方在自己的浏览器里上传证件、添加水印后下载给你。我们不存储也不会看到任何证件。',
     labelHost: '你的名称 / 民宿名称',
     placeholderHost: '例：张三民宿、李四 Airbnb',
     labelPurpose: '证件用途',
@@ -215,6 +217,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: '发送给（房东/民宿名称）',
     placeholderRecipient: '例：张三民宿、李四 Airbnb',
     fieldRequired: '请填写所有必填项',
+    shareMsg: (purpose) => `您好！我需要您提供证件用于「${purpose}」。请点击下方链接为证件添加水印后发给我，只需几秒钟，证件仅在您的设备上处理，我们不存储任何内容。\n\n`,
   },
   es: {
     dateLocale: 'es-ES',
@@ -222,9 +225,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: 'SOLO USO AUTORIZADO',
     wmValidUntil: 'Válido hasta',
     appTitle: 'WaterID',
-    appSubtitle: 'Las imágenes se procesan localmente en tu dispositivo — nunca se envían a ningún servidor',
+    appSubtitle: 'Tus documentos nunca salen de tu dispositivo. No los almacenamos.',
     heroTitle: 'Genera tu Enlace Seguro',
-    heroBody: 'Configura tu información y envía el enlace. La otra parte sube su documento, la marca de agua se añade en su navegador y luego lo descarga para ti.',
+    heroBody: 'Configura tu información y envía el enlace. La otra parte sube su documento, la marca de agua se añade en su navegador y lo descarga para ti. No almacenamos ni vemos ningún documento.',
     labelHost: 'Tu nombre / nombre del alojamiento',
     placeholderHost: 'ej. Airbnb de Juan, Casa Rural María',
     labelPurpose: 'Propósito',
@@ -284,6 +287,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: 'Enviando a (nombre del anfitrión/propietario)',
     placeholderRecipient: 'ej. Airbnb de Juan, Casa Rural María',
     fieldRequired: 'Por favor, rellena todos los campos requeridos',
+    shareMsg: (purpose) => `¡Hola! Necesito verificar tu documento de identidad para "${purpose}". Por favor, usa el enlace a continuación para añadir una marca de agua antes de enviármelo. Solo tarda unos segundos y tu documento se procesa en tu navegador, nunca se almacena.\n\n`,
   },
   fr: {
     dateLocale: 'fr-FR',
@@ -291,9 +295,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: 'USAGE AUTORISÉ UNIQUEMENT',
     wmValidUntil: "Valide jusqu'au",
     appTitle: 'WaterID',
-    appSubtitle: "Les images sont traitées localement sur votre appareil — jamais envoyées à un serveur",
+    appSubtitle: "Vos documents ne quittent jamais votre appareil. Nous ne les stockons pas.",
     heroTitle: 'Générez Votre Lien Sécurisé',
-    heroBody: "Configurez vos informations et envoyez le lien. L'autre partie télécharge son document, le filigrane est ajouté dans son navigateur, puis elle vous l'envoie.",
+    heroBody: "Configurez vos informations et envoyez le lien. L'autre partie télécharge son document, le filigrane est ajouté dans son navigateur et elle vous l'envoie. Nous ne stockons ni ne consultons aucun document.",
     labelHost: 'Votre nom / nom du logement',
     placeholderHost: 'ex. Airbnb de Jean, Gîte Marie',
     labelPurpose: 'Objet',
@@ -353,6 +357,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: "Envoi à (nom de l'hôte/propriétaire)",
     placeholderRecipient: 'ex. Airbnb de Jean, Gîte Marie',
     fieldRequired: 'Veuillez remplir tous les champs requis',
+    shareMsg: (purpose) => `Bonjour ! J'ai besoin de vérifier votre pièce d'identité pour « ${purpose} ». Veuillez utiliser le lien ci-dessous pour ajouter un filigrane avant de me l'envoyer. Cela prend quelques secondes et votre document est traité dans votre navigateur, jamais stocké.\n\n`,
   },
   de: {
     dateLocale: 'de-DE',
@@ -360,9 +365,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: 'NUR AUTORISIERTE NUTZUNG',
     wmValidUntil: 'Gültig bis',
     appTitle: 'WaterID',
-    appSubtitle: 'Bilder werden lokal auf Ihrem Gerät verarbeitet — nie auf einen Server hochgeladen',
+    appSubtitle: 'Ihre Dokumente verlassen nie Ihr Gerät. Wir speichern sie nicht.',
     heroTitle: 'Sicheren Link Generieren',
-    heroBody: 'Geben Sie Ihre Daten ein und senden Sie den Link. Die andere Partei lädt ihr Dokument hoch, das Wasserzeichen wird in ihrem Browser hinzugefügt und sie sendet es Ihnen.',
+    heroBody: 'Geben Sie Ihre Daten ein und senden Sie den Link. Die andere Partei lädt ihr Dokument hoch, das Wasserzeichen wird in ihrem Browser hinzugefügt und sie sendet es Ihnen. Wir speichern keine Dokumente.',
     labelHost: 'Ihr Name / Unterkunftsname',
     placeholderHost: "z.B. Hans' Airbnb, Maria's Ferienhaus",
     labelPurpose: 'Zweck',
@@ -422,6 +427,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: 'Senden an (Name des Gastgebers/Vermieters)',
     placeholderRecipient: "z.B. Hans' Airbnb, Maria's Ferienhaus",
     fieldRequired: 'Bitte füllen Sie alle Pflichtfelder aus',
+    shareMsg: (purpose) => `Hallo! Ich benötige Ihren Ausweis für „${purpose}". Bitte verwenden Sie den untenstehenden Link, um ein Wasserzeichen hinzuzufügen, bevor Sie ihn mir senden. Das dauert nur Sekunden und Ihr Dokument wird in Ihrem Browser verarbeitet, nie gespeichert.\n\n`,
   },
   ja: {
     dateLocale: 'ja-JP',
@@ -429,9 +435,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: '【認証済み証明書専用】',
     wmValidUntil: '有効期限',
     appTitle: 'WaterID',
-    appSubtitle: '画像はデバイス上でローカル処理 — サーバーに送信されません',
+    appSubtitle: '書類はお使いのデバイスから外に出ません。私たちは保存しません。',
     heroTitle: 'セキュアリンクを生成',
-    heroBody: '情報を設定してリンクを送信。相手がドキュメントをアップロードすると、ブラウザで透かしが追加され、ダウンロードして送ってもらえます。',
+    heroBody: '情報を設定してリンクを送信してください。相手がブラウザで書類をアップロードすると、透かしが追加されてダウンロードされます。書類を保存したり閲覧したりすることはありません。',
     labelHost: 'あなたの名前 / 宿泊施設名',
     placeholderHost: '例: 田中のAirbnb、山田荘',
     labelPurpose: '目的',
@@ -491,6 +497,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: '送付先（ホスト/大家の名前）',
     placeholderRecipient: '例: 田中のAirbnb、山田荘',
     fieldRequired: 'すべての必須項目を入力してください',
+    shareMsg: (purpose) => `こんにちは！「${purpose}」のため、身分証明書のご提出をお願いしております。下記リンクから透かしを追加してからお送りください。数秒で完了し、書類はお使いのブラウザで処理されます。保存は一切されません。\n\n`,
   },
   ko: {
     dateLocale: 'ko-KR',
@@ -498,9 +505,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: '【공인 사용 전용】',
     wmValidUntil: '유효기간',
     appTitle: 'WaterID',
-    appSubtitle: '이미지는 기기에서 로컬 처리 — 서버에 업로드되지 않음',
+    appSubtitle: '서류는 기기를 벗어나지 않습니다. 우리는 보관하지 않습니다.',
     heroTitle: '보안 링크 생성',
-    heroBody: '정보를 설정하고 링크를 전송하세요. 상대방이 서류를 업로드하면 브라우저에서 워터마크가 추가되고 다운로드하여 전송합니다.',
+    heroBody: '정보를 설정하고 링크를 전송하세요. 상대방이 브라우저에서 서류를 업로드하면 워터마크가 추가되고 다운로드됩니다. 어떤 서류도 저장하거나 열람하지 않습니다.',
     labelHost: '이름 / 숙소 이름',
     placeholderHost: '예: 김철수 에어비앤비, 박민준 게스트하우스',
     labelPurpose: '목적',
@@ -560,6 +567,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: '받는 사람 (호스트/집주인 이름)',
     placeholderRecipient: '예: 김철수 에어비앤비, 박민준 게스트하우스',
     fieldRequired: '모든 필수 항목을 입력해 주세요',
+    shareMsg: (purpose) => `안녕하세요! "${purpose}"을 위해 신분증 확인이 필요합니다. 아래 링크를 통해 워터마크를 추가한 후 보내주세요. 몇 초면 완료되며, 서류는 브라우저에서 처리되고 저장되지 않습니다.\n\n`,
   },
   pt: {
     dateLocale: 'pt-BR',
@@ -567,9 +575,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: 'SOMENTE USO AUTORIZADO',
     wmValidUntil: 'Válido até',
     appTitle: 'WaterID',
-    appSubtitle: 'Imagens processadas localmente no seu dispositivo — nunca enviadas a servidores',
+    appSubtitle: 'Seus documentos nunca saem do seu dispositivo. Não os armazenamos.',
     heroTitle: 'Gere Seu Link Seguro',
-    heroBody: "Configure suas informações e envie o link. A outra parte faz upload do documento, a marca d'água é adicionada no navegador e depois baixada para você.",
+    heroBody: "Configure suas informações e envie o link. A outra parte faz upload do documento, a marca d'água é adicionada no navegador e baixada para você. Não armazenamos nem vemos nenhum documento.",
     labelHost: 'Seu nome / nome da acomodação',
     placeholderHost: 'ex. Airbnb do João, Casa da Maria',
     labelPurpose: 'Finalidade',
@@ -629,6 +637,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: 'Enviando para (nome do anfitrião/proprietário)',
     placeholderRecipient: 'ex. Airbnb do João, Casa da Maria',
     fieldRequired: 'Por favor, preencha todos os campos obrigatórios',
+    shareMsg: (purpose) => `Olá! Preciso verificar seu documento de identidade para "${purpose}". Por favor, use o link abaixo para adicionar uma marca d'água antes de me enviar. Leva apenas alguns segundos e seu documento é processado no seu navegador, nunca armazenado.\n\n`,
   },
   it: {
     dateLocale: 'it-IT',
@@ -636,9 +645,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: 'SOLO USO AUTORIZZATO',
     wmValidUntil: 'Valido fino al',
     appTitle: 'WaterID',
-    appSubtitle: 'Le immagini vengono elaborate localmente sul tuo dispositivo — mai inviate a server',
+    appSubtitle: 'I tuoi documenti non lasciano mai il tuo dispositivo. Non li salviamo.',
     heroTitle: 'Genera il Tuo Link Sicuro',
-    heroBody: "Configura le tue informazioni e invia il link. L'altra parte carica il documento, la filigrana viene aggiunta nel browser e poi scaricata per te.",
+    heroBody: "Configura le tue informazioni e invia il link. L'altra parte carica il documento, la filigrana viene aggiunta nel browser e poi scaricata per te. Non salviamo né vediamo i tuoi documenti.",
     labelHost: 'Il tuo nome / nome della struttura',
     placeholderHost: "es. Airbnb di Marco, Casa Vacanze Maria",
     labelPurpose: 'Scopo',
@@ -698,6 +707,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: "Invio a (nome dell'host/proprietario)",
     placeholderRecipient: 'es. Airbnb di Marco, Casa Vacanze Maria',
     fieldRequired: 'Si prega di compilare tutti i campi obbligatori',
+    shareMsg: (purpose) => `Ciao! Ho bisogno di verificare il tuo documento d'identità per "${purpose}". Usa il link qui sotto per aggiungere una filigrana prima di inviarmelo. Richiede pochi secondi e il documento viene elaborato nel tuo browser, mai salvato.\n\n`,
   },
   ru: {
     dateLocale: 'ru-RU',
@@ -705,9 +715,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: 'ТОЛЬКО АВТОРИЗОВАННОЕ ИСПОЛЬЗОВАНИЕ',
     wmValidUntil: 'Действ. до',
     appTitle: 'WaterID',
-    appSubtitle: 'Изображения обрабатываются локально на вашем устройстве — никогда не отправляются на сервер',
+    appSubtitle: 'Ваши документы не покидают ваше устройство. Мы их не храним.',
     heroTitle: 'Создать Безопасную Ссылку',
-    heroBody: 'Введите свои данные и отправьте ссылку. Другая сторона загружает документ, водяной знак добавляется в браузере, затем скачивается для вас.',
+    heroBody: 'Введите свои данные и отправьте ссылку. Другая сторона загружает документ, водяной знак добавляется в браузере и скачивается для вас. Мы не храним и не просматриваем никакие документы.',
     labelHost: 'Ваше имя / название жилья',
     placeholderHost: 'напр. Airbnb Ивана, Апартаменты Марии',
     labelPurpose: 'Цель',
@@ -767,6 +777,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: 'Кому отправляется (имя хозяина/арендодателя)',
     placeholderRecipient: 'напр. Airbnb Ивана, Апартаменты Марии',
     fieldRequired: 'Пожалуйста, заполните все обязательные поля',
+    shareMsg: (purpose) => `Здравствуйте! Мне нужно проверить ваш документ для «${purpose}». Пожалуйста, используйте ссылку ниже, чтобы добавить водяной знак перед отправкой. Это займёт несколько секунд — документ обрабатывается в вашем браузере и нигде не сохраняется.\n\n`,
   },
   tr: {
     dateLocale: 'tr-TR',
@@ -774,9 +785,9 @@ const TRANSLATIONS: Record<LangCode, T> = {
     wmCornerTitle: 'YALNIZCA YETKİLİ KULLANIM',
     wmValidUntil: 'Geçerlilik tarihi',
     appTitle: 'WaterID',
-    appSubtitle: 'Görüntüler cihazınızda yerel olarak işlenir — hiçbir sunucuya gönderilmez',
+    appSubtitle: 'Belgeleriniz cihazınızı terk etmez. Biz onları saklamayız.',
     heroTitle: 'Güvenli Bağlantı Oluştur',
-    heroBody: 'Bilgilerinizi girin ve bağlantıyı gönderin. Karşı taraf kimliğini yükler, filigran tarayıcısında eklenir, ardından size indirir — görseller hiçbir sunucuya ulaşmaz.',
+    heroBody: 'Bilgilerinizi girin ve bağlantıyı gönderin. Karşı taraf kimliğini tarayıcısında yükler, filigran eklenir ve indirir. Hiçbir belgeyi saklamıyor veya görmüyoruz.',
     labelHost: 'Adınız / mülk adı',
     placeholderHost: "örn. Ahmet'in Airbnb'si, Maria'nın Pansiyonu",
     labelPurpose: 'Amaç',
@@ -836,6 +847,7 @@ const TRANSLATIONS: Record<LangCode, T> = {
     labelRecipient: 'Kime gönderiliyor (ev sahibi/mülk sahibi adı)',
     placeholderRecipient: "örn. Ahmet'in Airbnb'si, Maria'nın Pansiyonu",
     fieldRequired: 'Lütfen tüm zorunlu alanları doldurun',
+    shareMsg: (purpose) => `Merhaba! "${purpose}" için kimlik doğrulaması yapılması gerekiyor. Lütfen aşağıdaki bağlantıyı kullanarak kimliğinize filigran ekleyip gönderin. Sadece birkaç saniye sürer ve belgeniz tarayıcınızda işlenir, hiçbir yerde saklanmaz.\n\n`,
   },
 };
 
