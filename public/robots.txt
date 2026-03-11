@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://inkiy.github.io/waterid/sitemap.xml
