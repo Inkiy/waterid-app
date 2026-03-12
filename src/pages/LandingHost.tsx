@@ -971,14 +971,23 @@ export default function LandingHost({ initialLang = 'en' }: { initialLang?: Lang
           </button>
         </section>
 
-        {/* Back */}
-        <div className="text-center pb-6">
+        {/* Back + Feedback */}
+        <div className="text-center pb-6 flex items-center justify-center gap-4">
           <button
             onClick={() => { window.location.hash = '#/'; }}
             className="text-sm text-slate-400 hover:text-slate-600 transition"
           >
             {tr.backToHome}
           </button>
+          <span className="text-slate-200">|</span>
+          <a
+            href="https://forms.gle/oxF1A5ZHekJnrLET8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-slate-400 hover:text-slate-600 transition"
+          >
+            Feedback
+          </a>
         </div>
       </main>
     </div>
